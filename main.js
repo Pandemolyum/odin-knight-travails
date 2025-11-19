@@ -3,6 +3,7 @@ function knightMoves(startPos, endPos) {
     const board = computePaths(startPos);
     const solutions = getShortestPath(board, endPos);
     board.displayComputedSquares();
+    displayShortestPaths(solutions);
     console.log(board);
 }
 
@@ -99,6 +100,35 @@ function getShortestPath(board, endPos) {
     }
 
     return solutions;
+}
+
+function displayShortestPaths(solutions) {
+    const statement = document.querySelector("div>p");
+    statement.textContent = `The following moves get you from ${numToChar(
+        solutions[0].at(-1).position[0]
+    )}${solutions[0].at(-1).position[1] + 1} to ${numToChar(
+        solutions[0][0].position[0]
+    )}${solutions[0][0].position[1] + 1} the fastest:`;
+
+    const div = document.querySelector("div");
+    let i = 1;
+    for (const solution of solutions) {
+        solution.reverse();
+        const para = document.createElement("p");
+        para.textContent = `${i}.\t`;
+        for (const square of solution) {
+            para.textContent += `${numToChar(square.position[0])}${
+                square.position[1] + 1
+            }, `;
+        }
+        para.textContent = para.textContent.slice(0, -2);
+        div.appendChild(para);
+        i++;
+    }
+}
+
+function numToChar(num) {
+    return String.fromCharCode(65 + num);
 }
 
 class Square {
