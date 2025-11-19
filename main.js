@@ -1,7 +1,7 @@
 // Returns the shortest possible set of moves for the knight to get from square startPos to square endPos
 function knightMoves(startPos, endPos) {
     const board = computePaths(startPos);
-    console.log(getShortestPath(board, endPos));
+    const solutions = getShortestPath(board, endPos);
     board.displayComputedSquares();
     console.log(board);
 }
@@ -20,23 +20,18 @@ function computePaths(startPos) {
         currSquare = queue.at(-1);
         if (moveNum <= MAX_MOVES && currSquare.value === null) {
             currSquare.value = moveNum;
-            if (currPath.length !== 0) {
-                currSquare.links.push(currPath.at(-1));
-            }
 
             // Only queue more moves if MAX_MOVES has not been reached
             if (moveNum < MAX_MOVES) {
                 currPath.push(currSquare);
                 const legalMoves = board.getLegalSquares(currSquare.position);
                 queue = queue.concat(legalMoves);
-                currSquare.links = currSquare.links.concat(legalMoves);
                 moveNum++;
             } else {
                 queue.pop();
             }
         } else if (moveNum <= MAX_MOVES && moveNum < currSquare.value) {
             currSquare.value = moveNum;
-            currSquare.links.push(currPath.at(-1));
             currPath.push(currSquare);
             const legalMoves = board.getLegalSquares(currSquare.position);
             queue = queue.concat(legalMoves);
@@ -63,8 +58,20 @@ function getShortestPath(board, endPos) {
     let currPath = []; // Keeps track of the current path
     let solutions = []; // Stores solutions of the shortest path
 
-    if (currSquare.value === 0) return [currSquare]; // If the end and start position are the same
+    // Set link values for each square
+    for (let i = 0; i < board.size; i++) {
+        for (let j = 0; j < board.size; j++) {
+            board.board[i][j].links = board.getLegalSquares(
+                board.board[i][j].position
+            );
+        }
+    }
 
+    // If the end and start position are the same
+    if (currSquare.value === 0) return [currSquare];
+
+    // Search through all the links of the end position that have
+    // a lower value than the previous link
     while (queue.length !== 0) {
         currSquare = queue.at(-1);
 
@@ -80,7 +87,7 @@ function getShortestPath(board, endPos) {
         currSquare.links.forEach((link) => {
             if (link.value === 0) {
                 currPath.push(link);
-                solutions.push(currPath);
+                solutions.push(currPath.map((x) => x));
                 currPath.pop();
             } else if (link.value + 1 === currValue) {
                 queue.push(link);
