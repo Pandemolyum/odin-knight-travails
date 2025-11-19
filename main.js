@@ -4,7 +4,6 @@ function knightMoves(startPos, endPos) {
     const solutions = getShortestPath(board, endPos);
     board.displayComputedSquares();
     displayShortestPaths(solutions);
-    console.log(board);
 }
 
 // Returns a board with each square containing the shortest number of moves to get to it
@@ -102,15 +101,17 @@ function getShortestPath(board, endPos) {
     return solutions;
 }
 
+// Displays the shortest paths given an array of paths
 function displayShortestPaths(solutions) {
-    const statement = document.querySelector("div>p");
-    statement.textContent = `The following moves get you from ${numToChar(
+    const div = document.querySelector("div.paths");
+    const statement = document.createElement("p");
+    div.appendChild(statement);
+    statement.textContent = `The following path gets the knight from ${numToChar(
         solutions[0].at(-1).position[0]
     )}${solutions[0].at(-1).position[1] + 1} to ${numToChar(
         solutions[0][0].position[0]
-    )}${solutions[0][0].position[1] + 1} the fastest:`;
+    )}${solutions[0][0].position[1] + 1} in ${solutions[0].length - 1} moves:`;
 
-    const div = document.querySelector("div");
     let i = 1;
     for (const solution of solutions) {
         solution.reverse();
@@ -127,8 +128,24 @@ function displayShortestPaths(solutions) {
     }
 }
 
+// Returns a letter from a number
 function numToChar(num) {
     return String.fromCharCode(65 + num);
+}
+
+// Returns a number from a letter
+function charToNum(char) {
+    console.log("🚀 ~ charToNum ~ char:", char);
+    if (char === "" || char === undefined) {
+        return NaN;
+    }
+    return char.charCodeAt(0) - 65;
+}
+
+// Clears the div.paths section of the html
+function clearPathsDisplay() {
+    const div = document.querySelector("div.paths");
+    div.replaceChildren();
 }
 
 class Square {
@@ -189,6 +206,7 @@ class Board {
         return legalSquares;
     }
 
+    // Displays computed squares in the document
     displayComputedSquares() {
         const cells = document.querySelectorAll("td");
 
@@ -227,3 +245,42 @@ class Board {
 
 // ============= MAIN CODE =============
 knightMoves([0, 0], [7, 7]);
+
+const button = document.querySelector("button");
+button.addEventListener("click", (e) => {
+    const textInputs = document.querySelectorAll("input");
+    let values = [];
+    textInputs.forEach((input) => {
+        values.push(input.value.toUpperCase());
+    });
+
+    // Check if input is valid
+    let valid = true; // True if input is valid, false otherwise
+    const startLetterIndex = charToNum(values[0][0]);
+    const endLetterindex = charToNum(values[1][0]);
+    const startNumIndex = parseInt(values[0][1]) - 1;
+    const endNumIndex = parseInt(values[1][1]) - 1;
+    const startIndexArr = [startLetterIndex, endLetterindex];
+    const endIndexArr = [startNumIndex, endNumIndex];
+
+    if (startIndexArr.some((i) => i < 0 || i > 7 || isNaN(i))) {
+        textInputs[0].classList.add("invalid");
+        valid = false;
+    }
+
+    if (endIndexArr.some((i) => i < 0 || i > 7 || isNaN(i))) {
+        textInputs[1].classList.add("invalid");
+        valid = false;
+    }
+
+    if (valid) {
+        textInputs[0].classList.remove("invalid");
+        textInputs[1].classList.remove("invalid");
+
+        const startPos = [startNumIndex, startLetterIndex];
+        const endPos = [endNumIndex, endLetterindex];
+
+        clearPathsDisplay();
+        knightMoves(startPos, endPos);
+    }
+});

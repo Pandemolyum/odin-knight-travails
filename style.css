@@ -18,3 +18,7 @@ th {
 p {
     white-space: pre;
 }
+
+input.invalid {
+    border-color: red;
+}
