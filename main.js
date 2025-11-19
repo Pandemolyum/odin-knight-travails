@@ -1,5 +1,12 @@
 // Returns the shortest possible set of moves for the knight to get from square startPos to square endPos
 function knightMoves(startPos, endPos) {
+    const board = computePaths(startPos);
+    getShortestPath(board, endPos);
+    board.displayComputedSquares();
+    console.log(board);
+}
+
+function computePaths(startPos) {
     const board = new Board();
     let queue = [board.getSquare(startPos)]; // Queues squares for search
     let currPath = []; // Keeps track of the current path
@@ -43,8 +50,11 @@ function knightMoves(startPos, endPos) {
         }
     }
 
-    console.log(board);
-    board.displayComputedSquares();
+    return board;
+}
+
+function getShortestPath(board, endPos) {
+    console.log(endPos);
 }
 
 class Square {
@@ -78,14 +88,6 @@ class Board {
 
     getSquare(position) {
         return this.board[position[0]][position[1]];
-    }
-
-    setSquareValue(position, value) {
-        this.getSquare(position).value = value;
-    }
-
-    addSquareLink(position, link) {
-        this.getSquare(position).links.push(link);
     }
 
     // Returns an array with all possible legal moves of the knight
@@ -122,10 +124,6 @@ class Board {
                     i % this.size
                 ].value;
 
-            console.log(
-                "🚀 ~ Board ~ displayComputedSquares ~ cells[i].textContent:",
-                cells[i].textContent
-            );
             switch (cells[i].textContent) {
                 case "0":
                     cells[i].style.backgroundColor = "#8be700ff";
@@ -154,4 +152,4 @@ class Board {
 }
 
 // ============= MAIN CODE =============
-knightMoves([3, 3], [7, 7]);
+knightMoves([0, 0], [7, 7]);
