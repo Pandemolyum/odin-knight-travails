@@ -257,28 +257,29 @@ button.addEventListener("click", (e) => {
     // Check if input is valid
     let valid = true; // True if input is valid, false otherwise
     const startLetterIndex = charToNum(values[0][0]);
-    const endLetterindex = charToNum(values[1][0]);
+    const endLetterIndex = charToNum(values[1][0]);
     const startNumIndex = parseInt(values[0][1]) - 1;
     const endNumIndex = parseInt(values[1][1]) - 1;
-    const startIndexArr = [startLetterIndex, endLetterindex];
-    const endIndexArr = [startNumIndex, endNumIndex];
+    const startIndexArr = [startLetterIndex, startNumIndex];
+    const endIndexArr = [endLetterIndex, endNumIndex];
 
     if (startIndexArr.some((i) => i < 0 || i > 7 || isNaN(i))) {
         textInputs[0].classList.add("invalid");
         valid = false;
+    } else {
+        textInputs[0].classList.remove("invalid");
     }
 
     if (endIndexArr.some((i) => i < 0 || i > 7 || isNaN(i))) {
         textInputs[1].classList.add("invalid");
         valid = false;
+    } else {
+        textInputs[1].classList.remove("invalid");
     }
 
     if (valid) {
-        textInputs[0].classList.remove("invalid");
-        textInputs[1].classList.remove("invalid");
-
         const startPos = [startNumIndex, startLetterIndex];
-        const endPos = [endNumIndex, endLetterindex];
+        const endPos = [endNumIndex, endLetterIndex];
 
         clearPathsDisplay();
         knightMoves(startPos, endPos);
