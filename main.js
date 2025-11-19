@@ -1,11 +1,13 @@
 // Returns the shortest possible set of moves for the knight to get from square startPos to square endPos
 function knightMoves(startPos, endPos) {
     const board = computePaths(startPos);
-    getShortestPath(board, endPos);
+    console.log(getShortestPath(board, endPos));
     board.displayComputedSquares();
     console.log(board);
 }
 
+// Returns a board with each square containing the shortest number of moves to get to it
+// and the squares that are linked to it
 function computePaths(startPos) {
     const board = new Board();
     let queue = [board.getSquare(startPos)]; // Queues squares for search
@@ -53,8 +55,43 @@ function computePaths(startPos) {
     return board;
 }
 
+// Returns the shortest paths to the end position given a pre-computed board
 function getShortestPath(board, endPos) {
-    console.log(endPos);
+    let currSquare = board.getSquare(endPos); // Keeps track of the current square
+    let queue = [currSquare]; // Queues squares for search by depth
+    let currValue = currSquare.value; // Keeps track of the current square value
+    let currPath = []; // Keeps track of the current path
+    let solutions = []; // Stores solutions of the shortest path
+
+    if (currSquare.value === 0) return [currSquare]; // If the end and start position are the same
+
+    while (queue.length !== 0) {
+        currSquare = queue.at(-1);
+
+        if (currPath.at(-1) !== currSquare) {
+            currPath.push(currSquare);
+        } else {
+            queue.pop();
+            currPath.pop();
+            currValue++;
+            continue;
+        }
+
+        currSquare.links.forEach((link) => {
+            if (link.value === 0) {
+                currPath.push(link);
+                solutions.push(currPath);
+                currPath.pop();
+            } else if (link.value + 1 === currValue) {
+                queue.push(link);
+            }
+        });
+
+        if (currSquare.links.some((link) => link.value + 1 === currValue))
+            currValue--;
+    }
+
+    return solutions;
 }
 
 class Square {
