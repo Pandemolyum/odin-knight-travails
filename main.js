@@ -44,6 +44,7 @@ function knightMoves(startPos, endPos) {
     }
 
     console.log(board);
+    board.displayComputedSquares();
 }
 
 class Square {
@@ -111,7 +112,46 @@ class Board {
 
         return legalSquares;
     }
+
+    displayComputedSquares() {
+        const cells = document.querySelectorAll("td");
+
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].textContent =
+                this.board[this.size - 1 - Math.floor(i / this.size)][
+                    i % this.size
+                ].value;
+
+            console.log(
+                "🚀 ~ Board ~ displayComputedSquares ~ cells[i].textContent:",
+                cells[i].textContent
+            );
+            switch (cells[i].textContent) {
+                case "0":
+                    cells[i].style.backgroundColor = "#8be700ff";
+                    break;
+                case "1":
+                    cells[i].style.backgroundColor = "#88B840";
+                    break;
+                case "2":
+                    cells[i].style.backgroundColor = "#C3D323";
+                    break;
+                case "3":
+                    cells[i].style.backgroundColor = "#F9EC35";
+                    break;
+                case "4":
+                    cells[i].style.backgroundColor = "#ED8D1F";
+                    break;
+                case "5":
+                    cells[i].style.backgroundColor = "#E86523";
+                    break;
+                case "6":
+                    cells[i].style.backgroundColor = "#E34017";
+                    break;
+            }
+        }
+    }
 }
 
 // ============= MAIN CODE =============
-knightMoves([0, 0], [7, 7]);
+knightMoves([3, 3], [7, 7]);
