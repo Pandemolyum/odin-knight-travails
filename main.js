@@ -215,6 +215,7 @@ class Board {
                     i % this.size
                 ].value;
 
+            // Set cell color
             switch (cells[i].textContent) {
                 case "0":
                     cells[i].style.backgroundColor = "#8be700de";
