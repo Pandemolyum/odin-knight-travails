@@ -107,10 +107,10 @@ function displayShortestPaths(solutions) {
     const statement = document.createElement("p");
     div.appendChild(statement);
     statement.textContent = `The following paths get the knight from ${numToChar(
-        solutions[0].at(-1).position[0]
-    )}${solutions[0].at(-1).position[1] + 1} to ${numToChar(
-        solutions[0][0].position[0]
-    )}${solutions[0][0].position[1] + 1} in ${solutions[0].length - 1} moves:`;
+        solutions[0].at(-1).position[1]
+    )}${solutions[0].at(-1).position[0] + 1} to ${numToChar(
+        solutions[0][0].position[1]
+    )}${solutions[0][0].position[0] + 1} in ${solutions[0].length - 1} moves:`;
 
     let i = 1;
     for (const solution of solutions) {
