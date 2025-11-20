@@ -106,7 +106,7 @@ function displayShortestPaths(solutions) {
     const div = document.querySelector("div.paths");
     const statement = document.createElement("p");
     div.appendChild(statement);
-    statement.textContent = `The following path gets the knight from ${numToChar(
+    statement.textContent = `The following paths get the knight from ${numToChar(
         solutions[0].at(-1).position[0]
     )}${solutions[0].at(-1).position[1] + 1} to ${numToChar(
         solutions[0][0].position[0]
@@ -218,25 +218,25 @@ class Board {
 
             switch (cells[i].textContent) {
                 case "0":
-                    cells[i].style.backgroundColor = "#8be700ff";
+                    cells[i].style.backgroundColor = "#8be700de";
                     break;
                 case "1":
-                    cells[i].style.backgroundColor = "#88B840";
+                    cells[i].style.backgroundColor = "#88B840de";
                     break;
                 case "2":
-                    cells[i].style.backgroundColor = "#C3D323";
+                    cells[i].style.backgroundColor = "#C3D323de";
                     break;
                 case "3":
-                    cells[i].style.backgroundColor = "#F9EC35";
+                    cells[i].style.backgroundColor = "#F9EC35de";
                     break;
                 case "4":
-                    cells[i].style.backgroundColor = "#ED8D1F";
+                    cells[i].style.backgroundColor = "#ED8D1Fde";
                     break;
                 case "5":
-                    cells[i].style.backgroundColor = "#E86523";
+                    cells[i].style.backgroundColor = "#E86523de";
                     break;
                 case "6":
-                    cells[i].style.backgroundColor = "#E34017";
+                    cells[i].style.backgroundColor = "#E34017de";
                     break;
             }
         }
