@@ -68,7 +68,7 @@ function getShortestPath(board, endPos) {
     }
 
     // If the end and start position are the same
-    if (currSquare.value === 0) return [currSquare];
+    if (currSquare.value === 0) return [[currSquare]];
 
     // Search through all the links of the end position that have
     // a lower value than the previous link
