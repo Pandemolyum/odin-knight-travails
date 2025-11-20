@@ -135,7 +135,6 @@ function numToChar(num) {
 
 // Returns a number from a letter
 function charToNum(char) {
-    console.log("🚀 ~ charToNum ~ char:", char);
     if (char === "" || char === undefined) {
         return NaN;
     }
