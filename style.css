@@ -1,3 +1,8 @@
+html {
+    background-color: hsl(37, 7%, 14%);
+    background-image: url(chess-knight.svg);
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -9,7 +14,7 @@ body {
         Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
         sans-serif;
     margin: 0 auto;
-    background-image: url(chess-knight.svg);
+    width: 60%;
 }
 
 h1 {
